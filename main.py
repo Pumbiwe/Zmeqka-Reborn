@@ -15,49 +15,44 @@ class MainMenu:
 
     def InitUI(self):
         self.screen.fill(VERY_DARK_BG)
-        self.greeting = PygameText(self.screen, text="Приветствуем тебя, странник!",
-                                   coordinates=(width // 2, height - 100))
-        self.description = PygameText(self.screen,
-                                      text="Ты находишься на главном окне. Здесь можно начать игру или посмотреть справочную информацию",
-                                      coordinates=(width // 2, height - 100 + 22), font_size=12, text_color=GREY)
+        self.title = PygameText(self.screen, text="Zmeyqa Reborn",
+                                   coordinates=(width // 2, 15))
 
         self.buttons = list()
         self.buttons.append(PygameButton(
-            self.screen, text="Начать", coordinates=(width - 60, height - 35, 100, 50),
+            self.screen, text="Начать", coordinates=(width // 2, width // 6, 200, 50),
             border_color=DARK_BG,
             background_color=DARK_BG,
             text_color=LIGHT,
-            border_radius=10,
+            border_radius=5,
             border_size=2,
             font_size=18
         ))
-
         self.buttons.append(PygameButton(
-            self.screen, text="Таблица Менделеева", coordinates=(115, 45, 200, 50),
-            text_color=LIGHT,
+            self.screen, text="Настройки", coordinates=(width // 2, width // 4, 200, 50),
             border_color=DARK_BG,
-            border_radius=12,
-            border_size=5,
-            font_size=16,
-            background_color=BLUE
+            background_color=DARK_BG,
+            text_color=LIGHT,
+            border_radius=5,
+            border_size=2,
+            font_size=18
         ))
-
         self.buttons.append(PygameButton(
-            self.screen, text="Таблица растворимости", coordinates=(width - 115, 45, 200, 50),
-            text_color=LIGHT,
+            self.screen, text="Статистика", coordinates=(width // 2, width // 3, 200, 50),
             border_color=DARK_BG,
-            border_radius=12,
-            border_size=5,
-            font_size=16,
-            background_color=BLUE
+            background_color=DARK_BG,
+            text_color=LIGHT,
+            border_radius=5,
+            border_size=2,
+            font_size=18
         ))
 
 
 if __name__ == '__main__':
     pygame.init()
-    pygame.display.set_caption("The world of chemistry: Great Invention")
+    pygame.display.set_caption("Zmeyqa reborn")
 
-    programIcon = pygame.image.load(f'{os.getcwd()}/assets/chemistry.png')
+    programIcon = pygame.image.load(f'{os.getcwd()}/assets/cobra.png')
     pygame.display.set_icon(programIcon)
 
     size = width, height = 720, 500
@@ -68,10 +63,15 @@ if __name__ == '__main__':
 
     screen.fill(VERY_DARK_BG)
 
+    menu = MainMenu(screen, sprites)
+
     while running:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 running = False
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                for button in menu.buttons:
+                    button.pressed(pygame.mouse.get_pos())
 
         pygame.display.flip()
 

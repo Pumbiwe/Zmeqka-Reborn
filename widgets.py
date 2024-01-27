@@ -1,8 +1,8 @@
+from typing import List, Any
+
 import pygame
 from colors import *
 import os
-import tkinter as tk
-from tkinter import ttk
 
 from sql_manager import Database
 
@@ -59,13 +59,17 @@ class PygameButton:
         self.background_color = background_color
         self.update()
 
+    def point_in_area(self, point) -> bool:
+        return all([
+            point[0] >= self.coordinates[0] - self.coordinates[2] // 2,
+            point[0] <= self.coordinates[0] + self.coordinates[2] // 2,
+            point[1] >= self.coordinates[1] - self.coordinates[3] // 2,
+            point[1] <= self.coordinates[1] + self.coordinates[3] // 2
+        ])
+
+
     def pressed(self, mouse_position):
-        if all([
-            mouse_position[0] >= self.coordinates[0] - self.coordinates[2] // 2,
-            mouse_position[0] <= self.coordinates[0] + self.coordinates[2] // 2,
-            mouse_position[1] >= self.coordinates[1] - self.coordinates[3] // 2,
-            mouse_position[1] <= self.coordinates[1] + self.coordinates[3] // 2
-        ]):
+        if self.point_in_area(mouse_position):
             if self.args:
                 self.on_clicked(self.args)
             else:
@@ -114,7 +118,7 @@ class PygameImage(pygame.sprite.Sprite):
     def __init__(
             self,
             screen,
-            name="chemistry.png",
+            name="cobra.png",
             coordinates=(0, 0),
             image_size=64,
             opacity=255,
@@ -193,58 +197,6 @@ class PygameImageButton(PygameImage):
 
     def on_click(self):
         print("CLICKED IMAGE")
-
-
-class PygameTube(PygameImageButton):
-    def __init__(self, *args, **kwargs) -> None:
-        self.color = VERY_DARK_BG
-        self.element = ""
-        self.clickable = True
-        self.checker = lambda: ...
-        super().__init__(*args, **kwargs)
-
-    def check_if_victory(self):
-        self.checker()
-
-    def on_click(self):
-        if not self.clickable:
-            return
-        self.main_window = tk.Tk()
-        self.main_window.config(width=250, height=75)
-        self.main_window.resizable(False, False)
-        self.main_window.title("Выберите элемент")
-        self.main_window.eval('tk::PlaceWindow . center')
-
-        self.combo = ttk.Combobox(state="readonly", values=Database().get_elements())
-        self.combo.place(x=50, y=5)
-        self.combo.set(Database().get_elements()[0])
-
-        ok = ttk.Button(text="OK", command=self.onOkClick)
-        ok.place(x=125 - 40, y=35)
-        self.main_window.mainloop()
-
-    def update(self):
-        size_x, size_y = self.image_size * 0.8, self.image_size // 4
-        pygame.draw.ellipse(
-            self.screen,
-            self.color,
-            (self.coordinates[0] - size_x // 2, self.coordinates[1] + size_y * 1.015, size_x, size_y),
-        )
-        self.screen.blit(self.image, [int(i) - self.image_size // 2 for i in self.coordinates])
-        if self.element:
-            self.title = PygameButton(self.screen, background_color=DARK_BG, text_color=LIGHT, border_color=DARK_BG,
-                                      coordinates=(
-                                      self.coordinates[0], self.coordinates[1] + self.image_size * 0.6, 80, 30),
-                                      text=self.element)
-
-    def fill(self, element):
-        self.color = colors[Database().get_color(element)]
-        self.element = element
-        self.update()
-
-    def onOkClick(self):
-        self.fill(self.combo.get())
-        self.main_window.destroy()
 
 
 class PygameLine:

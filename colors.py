@@ -16,16 +16,3 @@ BLUE = "#4169e1"
 LIGHT_BLUE = "#4e6ecd"
 
 PURPLE = "#7569D0"
-
-colors = {
-    'Белый': LIGHT,
-    'Черный': BLACK,
-    'Бесцветный': TRANSPARENT,
-
-    'Фиолетовый': PURPLE,
-    'Желтый': YELLOW,
-    'Красный': RED,
-    'Зеленый': GREEN,
-    'Синий': BLUE,
-    'Серебристый': SILVER,
-}
