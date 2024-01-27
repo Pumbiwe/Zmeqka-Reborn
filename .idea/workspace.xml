@@ -4,18 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="7a798c25-53ae-43f3-9df3-f89d266cb865" name="Changes" comment="Addition">
-      <change afterPath="$PROJECT_DIR$/assets/settings.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/assets/start.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/assets/statistic.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/game.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/settings.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/sounds/click.mp3" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/statistics.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/colors.py" beforeDir="false" afterPath="$PROJECT_DIR$/colors.py" afterDir="false" />
+    <list default="true" id="7a798c25-53ae-43f3-9df3-f89d266cb865" name="Changes" comment="Some changes">
+      <change afterPath="$PROJECT_DIR$/sounds/background.mp3" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/widgets.py" beforeDir="false" afterPath="$PROJECT_DIR$/widgets.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -120,13 +111,22 @@
       <option name="project" value="LOCAL" />
       <updated>1706347685314</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="Some changes">
+      <option name="closed" value="true" />
+      <created>1706351672051</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1706351672051</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
     <MESSAGE value="Initial" />
     <MESSAGE value="Addition" />
-    <option name="LAST_COMMIT_MESSAGE" value="Addition" />
+    <MESSAGE value="Some changes" />
+    <option name="LAST_COMMIT_MESSAGE" value="Some changes" />
   </component>
 </project>

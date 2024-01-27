@@ -4,6 +4,7 @@ from statistics import *
 from widgets import *
 from colors import *
 import os
+
 os.environ['PYGAME_HIDE_SUPPORT_PROMPT'] = "hide"
 import pygame
 
@@ -88,6 +89,7 @@ class MainMenu:
     def show_settings(self):
         self.play_button_sound(self.start_game)
         self.settings = Settings(self.screen)
+
     def show_statistics(self):
         self.play_button_sound(self.start_game)
         self.statistics = Statistics(self.screen)
@@ -96,20 +98,22 @@ class MainMenu:
 if __name__ == '__main__':
     pygame.init()
     pygame.display.set_caption("Zmeyqa reborn")
+    size = width, height = 500, 500
+    screen = pygame.display.set_mode(size)
+
+    pygame.mixer.init()
+    background_sound = pygame.mixer.Sound('sounds/background.mp3')
+    background_sound.play()
+    background_sound.set_volume(0.1)
 
     programIcon = pygame.image.load(f'{os.getcwd()}/assets/cobra.png')
     pygame.display.set_icon(programIcon)
 
-    size = width, height = 500, 500
-    screen = pygame.display.set_mode(size)
-
     sprites = pygame.sprite.Group()
-    running = True
-
     screen.fill(VERY_DARK_BG)
-
     menu = MainMenu(screen, sprites)
 
+    running = True
     while running:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
