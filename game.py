@@ -18,8 +18,8 @@ class Game:
         cell_size = (self.width - 40) // self.cells_count
         self.apple = PygameImage(self.screen,
                                  "apple.png",
-                                 (cell_size * 0.5 + 20 + x * cell_size,
-                                  cell_size * 0.5 + 20 + y * cell_size),
+                                 (20 + x * cell_size - (cell_size * 0.5 if x else -cell_size * 0.5),
+                                  20 + y * cell_size - (cell_size * 0.5 if y else -cell_size * 0.5)),
                                  image_size=cell_size)
 
     def initUI(self):
