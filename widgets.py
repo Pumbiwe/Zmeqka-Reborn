@@ -221,3 +221,71 @@ class PygameRectangle:
                 height
             )
         )
+
+
+class PygameSlider:
+    def __init__(self,
+                 screen: pygame.surface,
+                 x: int,
+                 y: int,
+                 width: int,
+                 height: int,
+                 color=LIGHT,
+                 border_radius=6,
+                 progress_color=GREEN,
+                 on_clicked=None):
+        if not on_clicked:
+            on_clicked = self.on_click
+        self.on_clicked = on_clicked
+        self.screen = screen
+        self.coordinates = (x, y, width, height)
+        self.color = color
+        self.border_radius = border_radius
+        self.progress_color = progress_color
+        self.progress = 0
+
+        self.update()
+
+    def point_in_area(self, point) -> bool:
+        return all([
+            point[0] >= self.coordinates[0] - self.coordinates[2] // 2,
+            point[0] <= self.coordinates[0] + self.coordinates[2] // 2,
+            point[1] >= self.coordinates[1] - self.coordinates[3] // 2,
+            point[1] <= self.coordinates[1] + self.coordinates[3] // 2
+        ])
+
+    def on_click(self, position):
+        if self.point_in_area(position):
+            self.set_progress(
+                ((position[0] - self.coordinates[0]) / self.coordinates[2]) * 100 + 50
+            )
+
+    def set_progress(self, progress):
+        if 0 <= progress <= 100:
+            self.progress = progress
+            self.update()
+
+    def update(self):
+        pygame.draw.rect(
+            self.screen,
+            self.color,
+            (
+                self.coordinates[0] - self.coordinates[2] // 2,
+                self.coordinates[1] - self.coordinates[3] // 2,
+                self.coordinates[2],
+                self.coordinates[3]
+            ),
+            border_radius=self.border_radius
+        )
+        if self.progress >= 5:
+            pygame.draw.rect(
+                self.screen,
+                self.progress_color,
+                (
+                    self.coordinates[0] - self.coordinates[2] // 2,
+                    self.coordinates[1] - self.coordinates[3] // 2,
+                    self.coordinates[2] * self.progress / 100,
+                    self.coordinates[3]
+                ),
+                border_radius=self.border_radius
+            )

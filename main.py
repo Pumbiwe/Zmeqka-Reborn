@@ -101,20 +101,31 @@ if __name__ == '__main__':
     size = width, height = 500, 500
     screen = pygame.display.set_mode(size)
 
+    screen.fill(VERY_DARK_BG)
+    sprites = pygame.sprite.Group()
+    menu = MainMenu(screen, sprites)
+    db = Database()
+
     pygame.mixer.init()
     background_sound = pygame.mixer.Sound('sounds/background.mp3')
     background_sound.play()
-    background_sound.set_volume(0.1)
+    background_sound.set_volume(0.1 * db.get_settings()[0] / 100)
 
     programIcon = pygame.image.load(f'{os.getcwd()}/assets/cobra.png')
     pygame.display.set_icon(programIcon)
-
-    sprites = pygame.sprite.Group()
-    screen.fill(VERY_DARK_BG)
-    menu = MainMenu(screen, sprites)
-
     running = True
     while running:
+        if pygame.mouse.get_pressed()[0]:
+            if menu.settings:
+                for clickable in menu.settings.clickable:
+                    clickable.on_clicked(pygame.mouse.get_pos())
+                    if type(clickable) == PygameSlider:
+                        if clickable.point_in_area(pygame.mouse.get_pos()):
+                            db.save_settings(clickable.progress, db.get_settings()[1])
+                            volume = db.get_settings()[0] / 100
+                            pygame.mixer.music.set_volume(volume)
+                            background_sound.set_volume(0.1 * volume)
+
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 running = False

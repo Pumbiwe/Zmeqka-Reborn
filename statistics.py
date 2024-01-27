@@ -14,8 +14,12 @@ class Statistics:
     def initUI(self):
         self.screen.fill(VERY_DARK_BG)
         self.title = PygameText(self.screen, text="Statistics",
-                                coordinates=(self.width // 2, 15))
-
+                                coordinates=(self.width // 2, self.height * 0.025))
+        self.information = PygameText(
+            self.screen,
+            text="Последние 10 игр еще не сформированы",
+            coordinates=(self.width // 2, self.height * 0.1)
+        )
 
 
 if __name__ == '__main__':
