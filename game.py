@@ -40,8 +40,8 @@ class Game:
 
 
 if __name__ == '__main__':
-    pygame.init()
 
+    pygame.init()
     size = width, height = 500, 500
     screen = pygame.display.set_mode(size)
     screen.fill(VERY_DARK_BG)
