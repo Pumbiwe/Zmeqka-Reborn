@@ -85,14 +85,17 @@ class MainMenu:
     def start_game(self):
         self.play_button_sound(self.start_game)
         self.game = Game(self.screen)
+        self.buttons.clear()
 
     def show_settings(self):
         self.play_button_sound(self.start_game)
         self.settings = Settings(self.screen)
+        self.buttons.clear()
 
     def show_statistics(self):
         self.play_button_sound(self.start_game)
         self.statistics = Statistics(self.screen)
+        self.buttons.clear()
 
 
 if __name__ == '__main__':

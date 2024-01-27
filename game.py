@@ -1,4 +1,5 @@
 import os
+import random
 
 import pygame
 from colors import *
@@ -13,6 +14,14 @@ class Game:
 
         self.initUI()
 
+    def place_apple(self, x, y):
+        cell_size = (self.width - 40) // self.cells_count
+        self.apple = PygameImage(self.screen,
+                                 "apple.png",
+                                 (cell_size * 0.5 + 20 + x * cell_size,
+                                  cell_size * 0.5 + 20 + y * cell_size),
+                                 image_size=cell_size)
+
     def initUI(self):
         self.screen.fill(VERY_DARK_BG)
         background_border = PygameRectangle(self.screen, YELLOW, 15, 15, self.width - 30, self.height - 30)
@@ -26,6 +35,7 @@ class Game:
                                        20 + y * cell_size,
                                        cell_size,
                                        cell_size)
+        self.place_apple(random.randint(0, self.cells_count), random.randint(0, self.cells_count))
 
 
 if __name__ == '__main__':

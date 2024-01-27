@@ -30,6 +30,12 @@ class Settings:
         self.volume_slider.set_progress(self.db.get_settings()[0])
         self.clickable.append(self.volume_slider)
 
+        self.snake = PygameImage(
+            self.screen,
+            coordinates=(self.width // 2, self.height * 0.8),
+            image_size=256
+        )
+
 
 
 if __name__ == '__main__':

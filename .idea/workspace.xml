@@ -4,13 +4,14 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="7a798c25-53ae-43f3-9df3-f89d266cb865" name="Changes" comment="Background sound">
-      <change afterPath="$PROJECT_DIR$/database.db" afterDir="false" />
+    <list default="true" id="7a798c25-53ae-43f3-9df3-f89d266cb865" name="Changes" comment="Some new futures">
+      <change afterPath="$PROJECT_DIR$/assets/apple.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/snake.gif" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database.db" beforeDir="false" afterPath="$PROJECT_DIR$/database.db" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/game.py" beforeDir="false" afterPath="$PROJECT_DIR$/game.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/settings.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sql_manager.py" beforeDir="false" afterPath="$PROJECT_DIR$/sql_manager.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/widgets.py" beforeDir="false" afterPath="$PROJECT_DIR$/widgets.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -46,6 +47,7 @@
     "Python.main.executor": "Run",
     "Python.settings.executor": "Run",
     "Python.sql_manager.executor": "Run",
+    "Python.statistics.executor": "Run",
     "Python.widgets.executor": "Run",
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
@@ -134,7 +136,15 @@
       <option name="project" value="LOCAL" />
       <updated>1706351947640</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="Some new futures">
+      <option name="closed" value="true" />
+      <created>1706355725774</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1706355725774</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
@@ -143,6 +153,7 @@
     <MESSAGE value="Addition" />
     <MESSAGE value="Some changes" />
     <MESSAGE value="Background sound" />
-    <option name="LAST_COMMIT_MESSAGE" value="Background sound" />
+    <MESSAGE value="Some new futures" />
+    <option name="LAST_COMMIT_MESSAGE" value="Some new futures" />
   </component>
 </project>
