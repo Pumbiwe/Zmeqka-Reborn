@@ -1,10 +1,8 @@
-from typing import List, Any
-
-import pygame
-from colors import *
 import os
 
-from sql_manager import Database
+import pygame
+
+from colors import *
 
 
 class PygameText:
@@ -15,9 +13,9 @@ class PygameText:
             font_size: int = 22,
             text: str = "Default text",
             text_color: tuple | list | str = LIGHT,
-            coordinates: tuple = (0, 0)
+            coordinates: tuple | list = (0, 0)
     ):
-        self.screen, self.font_name, self.font_size, self.text, self.text_color, self.coordinates = screen, font_name, text, font_size, text_color, coordinates
+        self.screen, self.font_name, self.font_size, self.text, self.text_color, self.coordinates = screen, font_name, font_size, text, text_color, coordinates
         self.font = pygame.font.Font(font_name, font_size)
         self.text = self.font.render(text, True, text_color)
         self.text_rect = self.text.get_rect(center=coordinates)
@@ -42,7 +40,8 @@ class PygameButton:
             font_size=24,
             border_radius=3,
             border_size=3,
-            on_clicked=None
+            on_clicked=None,
+            sound="click.mp3"
     ):
         if not on_clicked:
             on_clicked = self.on_click
@@ -57,6 +56,7 @@ class PygameButton:
         self.text = text
         self.font_size = font_size
         self.background_color = background_color
+        self.sound = sound
         self.update()
 
     def point_in_area(self, point) -> bool:
@@ -67,7 +67,6 @@ class PygameButton:
             point[1] <= self.coordinates[1] + self.coordinates[3] // 2
         ])
 
-
     def pressed(self, mouse_position):
         if self.point_in_area(mouse_position):
             if self.args:
@@ -76,7 +75,11 @@ class PygameButton:
                 self.on_clicked()
 
     def on_click(self):
-        print('CLICKED')
+        self.play_sound()
+
+    def play_sound(self):
+        pygame.mixer.music.load(f"sounds/{self.sound}")
+        pygame.mixer.music.play()
 
     def update(self):
         coord = list(self.coordinates)
@@ -202,3 +205,19 @@ class PygameImageButton(PygameImage):
 class PygameLine:
     def __init__(self, screen, start, end, color, width) -> None:
         pygame.draw.line(screen, color, start, end, width)
+
+
+class PygameRectangle:
+    def __init__(self,
+                 screen: pygame.surface, color, x: int, y: int, width: int, height: int
+                 ):
+        pygame.draw.rect(
+            screen,
+            color,
+            (
+                x,
+                y,
+                width,
+                height
+            )
+        )
