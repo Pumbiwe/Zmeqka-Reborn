@@ -292,5 +292,21 @@ class PygameSlider:
 
 
 class PygameSnake:
-    def __init__(self, screen, x, y):
-        ...
+    UP = 1
+    DOWN = -1
+    LEFT = -2
+    RIGHT = 2
+    def __init__(self, screen:pygame.surface, points, radius=8, color=BLUE):
+        self.screen = screen
+        self.points = points
+        self.radius = radius
+        self.color = color
+        self.direction = self.UP
+        self.update()
+
+    def update(self):
+        for i in self.points:
+            pygame.draw.circle(self.screen, self.color, i, self.radius)
+        if self.direction in {self.UP, self.DOWN}:
+            pygame.draw.circle(self.screen, LIGHT, (self.points[0][0] + self.radius / 2, self.points[0][1] - self.radius / 2), self.radius / 3)
+            pygame.draw.circle(self.screen, LIGHT, (self.points[0][0] - self.radius / 2, self.points[0][1] - self.radius / 2), self.radius / 3)

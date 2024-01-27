@@ -36,6 +36,7 @@ class Game:
                                        cell_size,
                                        cell_size)
         self.place_apple(random.randint(0, self.cells_count), random.randint(0, self.cells_count))
+        Snake = PygameSnake(self.screen, [(self.width / 2 + cell_size / 2, self.height / 2 + cell_size / 2), (self.width / 2 + cell_size / 2, self.height / 2 + cell_size), (self.width / 2 + cell_size / 2, self.height / 2 + cell_size *1.5)], cell_size / 2)
 
 
 if __name__ == '__main__':
