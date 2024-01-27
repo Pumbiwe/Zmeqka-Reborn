@@ -231,7 +231,7 @@ class PygameSlider:
                  width: int,
                  height: int,
                  color=LIGHT,
-                 border_radius=6,
+                 border_radius=3,
                  progress_color=GREEN,
                  on_clicked=None):
         if not on_clicked:
@@ -277,7 +277,7 @@ class PygameSlider:
             ),
             border_radius=self.border_radius
         )
-        if self.progress >= 5:
+        if self.progress >= self.border_radius:
             pygame.draw.rect(
                 self.screen,
                 self.progress_color,
@@ -289,3 +289,8 @@ class PygameSlider:
                 ),
                 border_radius=self.border_radius
             )
+
+
+class PygameSnake:
+    def __init__(self, screen, x, y):
+        ...
