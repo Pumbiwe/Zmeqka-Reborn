@@ -152,6 +152,10 @@ class PygameImage(pygame.sprite.Sprite):
         self.rect = self.image.get_rect()
         self.update()
 
+    def flipper(self, x:bool=False, y:bool=False):
+        self.image = pygame.transform.flip(self.image, x, y)
+        self.update()
+
     def onMouseClicked(self, mouse_position):
         if all([
             mouse_position[0] >= self.coordinates[0] - self.image_size // 2,
@@ -189,6 +193,7 @@ class PygameImage(pygame.sprite.Sprite):
 class PygameImageButton(PygameImage):
     def __init__(self, *args, **kwargs) -> None:
         super().__init__(*args, **kwargs)
+        self.args = None
         self.on_clicked = self.on_click
 
     def pressed(self, mouse_position):
@@ -198,7 +203,10 @@ class PygameImageButton(PygameImage):
             mouse_position[1] >= self.coordinates[1] - self.image_size // 2,
             mouse_position[1] <= self.coordinates[1] + self.image_size // 2
         ]):
-            self.on_clicked()
+            if self.args:
+                self.on_clicked(self.args)
+            else:
+                self.on_clicked()
 
     def on_click(self):
         print("CLICKED IMAGE")
@@ -305,11 +313,11 @@ class PygameSnake:
         self.radius = radius
         self.color = color
         self.speed = speed
-        self.direction = self.UP
+        self.direction = self.DOWN
         self.circles = list()
         self.length = length
 
-        self.head_index = 0
+        self.head_index = -1
         self.update()
 
     def set_direction(self, direction):
@@ -324,7 +332,7 @@ class PygameSnake:
     def move(self, x, y):
         head_coordinates = (self.points[self.head_index][0] + x, self.points[self.head_index][1] + y)
         self.points.append(head_coordinates)
-        if len(self.points) != self.length:
+        if len(self.points) > self.length:
             self.points.pop(0)
         self.head_index = self.points.index(head_coordinates)
         del head_coordinates

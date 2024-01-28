@@ -4,7 +4,17 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="7a798c25-53ae-43f3-9df3-f89d266cb865" name="Changes" comment="Snake growing" />
+    <list default="true" id="7a798c25-53ae-43f3-9df3-f89d266cb865" name="Changes" comment="Fixes">
+      <change afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database.db" beforeDir="false" afterPath="$PROJECT_DIR$/database.db" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/game.py" beforeDir="false" afterPath="$PROJECT_DIR$/game.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/settings.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sql_manager.py" beforeDir="false" afterPath="$PROJECT_DIR$/sql_manager.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/statistics.py" beforeDir="false" afterPath="$PROJECT_DIR$/statistics.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/widgets.py" beforeDir="false" afterPath="$PROJECT_DIR$/widgets.py" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -29,7 +39,7 @@
   <component name="GithubPullRequestsUISettings">
     <option name="selectedUrlAndAccountId">
       <UrlAndAccount>
-        <option name="accountId" value="7f73cb4f-5533-45d4-a2d6-4efe037616f4" />
+        <option name="accountId" value="ff3482ec-81f7-4931-b610-44a7e4588739" />
         <option name="url" value="https://github.com/Pumbiwe/Zmeqka-Reborn" />
       </UrlAndAccount>
     </option>
@@ -48,6 +58,7 @@
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
     "ASKED_ADD_EXTERNAL_FILES": "true",
+    "ASKED_MARK_IGNORED_FILES_AS_EXCLUDED": "true",
     "Python.colors.executor": "Run",
     "Python.game.executor": "Run",
     "Python.main.executor": "Run",
@@ -222,7 +233,15 @@
       <option name="project" value="LOCAL" />
       <updated>1706436377270</updated>
     </task>
-    <option name="localTasksCounter" value="15" />
+    <task id="LOCAL-00015" summary="Fixes">
+      <option name="closed" value="true" />
+      <created>1706438942048</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1706438942048</updated>
+    </task>
+    <option name="localTasksCounter" value="16" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
@@ -238,6 +257,7 @@
     <MESSAGE value="Fixed eating" />
     <MESSAGE value="Fixed borders" />
     <MESSAGE value="Snake growing" />
-    <option name="LAST_COMMIT_MESSAGE" value="Snake growing" />
+    <MESSAGE value="Fixes" />
+    <option name="LAST_COMMIT_MESSAGE" value="Fixes" />
   </component>
 </project>

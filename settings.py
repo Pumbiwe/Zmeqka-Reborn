@@ -14,9 +14,10 @@ class Settings:
         self.db = Database()
         self.width, self.height = screen.get_rect()[2:]
         self.clickable = list()
-        self.initUI()
+        self.InitUI()
 
-    def initUI(self):
+    def InitUI(self):
+        self.clickable.clear()
         self.screen.fill(VERY_DARK_BG)
         self.title = PygameText(self.screen, text="Settings",
                                 coordinates=(self.width // 2, 15))
@@ -28,7 +29,7 @@ class Settings:
         )
         self.difficulty_value = PygameText(
             self.screen,
-            text="1",
+            text=str(self.db.get_settings()[1]),
             coordinates=(self.width // 2, self.height * 0.3)
         )
         self.difficulty_left = PygameImageButton(
@@ -44,10 +45,10 @@ class Settings:
             coordinates=(self.width * 0.65, self.height * 0.3)
         )
 
-        self.difficulty_left.on_clicked = self.change_difficulty
-        self.difficulty_right.on_clicked = self.change_difficulty
         self.difficulty_right.args = 1
         self.difficulty_left.args = -1
+        self.difficulty_left.on_clicked = self.change_difficulty
+        self.difficulty_right.on_clicked = self.change_difficulty
         self.clickable.append(self.difficulty_left)
         self.clickable.append(self.difficulty_right)
 
@@ -68,7 +69,11 @@ class Settings:
         )
 
     def change_difficulty(self, value):
-        ...
+        new_value = self.db.get_settings()[1] + value
+        if 1 <= new_value <= 3:
+            self.db.save_settings(self.db.get_settings()[0], new_value)
+            self.InitUI()
+        del new_value
 
 
 

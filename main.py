@@ -14,6 +14,7 @@ class MainMenu:
         self.screen = screen
         self.sprites = sprites
         self.game, self.settings, self.statistics = None, None, None
+        self.db = Database()
         self.InitUI()
 
     def InitUI(self):
@@ -84,7 +85,7 @@ class MainMenu:
 
     def start_game(self):
         self.play_button_sound(self.start_game)
-        self.game = Game(self.screen)
+        self.game = Game(self.screen, cells_count=[15, 12, 10][self.db.get_settings()[1] - 1])
         self.buttons.clear()
 
     def show_settings(self):
@@ -119,12 +120,19 @@ if __name__ == '__main__':
     running = True
 
     while running:
+        if menu.game:
+            menu.game.InitUI()
+            menu.game.snake.move(
+                0.01 * menu.game.snake.speed * ((0.5 * menu.game.snake.direction) if menu.game.snake.direction in {menu.game.snake.LEFT, menu.game.snake.RIGHT} else 0),
+                -0.01 * menu.game.snake.speed * (menu.game.snake.direction if menu.game.snake.direction in {menu.game.snake.UP, menu.game.snake.DOWN} else 0)
+            )
+
         if pygame.mouse.get_pressed()[0]:
             if menu.settings:
                 for clickable in menu.settings.clickable:
-                    clickable.on_clicked(pygame.mouse.get_pos())
                     if type(clickable) == PygameSlider:
                         if clickable.point_in_area(pygame.mouse.get_pos()):
+                            clickable.on_click(pygame.mouse.get_pos())
                             db.save_settings(clickable.progress, db.get_settings()[1])
                             volume = db.get_settings()[0] / 100
                             pygame.mixer.music.set_volume(volume)
@@ -133,9 +141,13 @@ if __name__ == '__main__':
         for event in pygame.event.get():
             keys = pygame.key.get_pressed()
             if event.type == pygame.QUIT:
+                if menu.game:
+                    menu.game.db.set_stats((max(menu.game.db.get_attempts()) if menu.game.db.get_attempts() else 0) + 1, menu.game.score)
                 running = False
                 pygame.quit()
             if keys[pygame.K_ESCAPE]:
+                if menu.game:
+                    menu.game.db.set_stats((max(menu.game.db.get_attempts()) if menu.game.db.get_attempts() else 0) + 1, menu.game.score)
                 if any([menu.game, menu.statistics, menu.settings]):
                     menu.game, menu.statistics, menu.settings = None, None, None
                     menu.InitUI()
@@ -145,20 +157,25 @@ if __name__ == '__main__':
             if event.type == pygame.MOUSEBUTTONDOWN:
                 for button in menu.buttons:
                     button.pressed(pygame.mouse.get_pos())
+
+                if menu.settings:
+                    for clickable in menu.settings.clickable:
+                        if type(clickable) is not PygameSlider:
+                            clickable.pressed(pygame.mouse.get_pos())
             if event.type == pygame.KEYDOWN:
                 if menu.game and menu.game.can_move:
                     menu.game.InitUI()
                     if keys[pygame.K_LEFT]:
-                        menu.game.snake.move(-0.5 * menu.game.cell_size, 0)
+                        # menu.game.snake.move(-0.5 * menu.game.cell_size, 0)
                         menu.game.snake.set_direction(menu.game.snake.LEFT)
                     elif keys[pygame.K_RIGHT]:
-                        menu.game.snake.move(0.5 * menu.game.cell_size, 0)
+                        # menu.game.snake.move(0.5 * menu.game.cell_size, 0)
                         menu.game.snake.set_direction(menu.game.snake.RIGHT)
                     elif keys[pygame.K_UP]:
-                        menu.game.snake.move(0, -0.5 * menu.game.cell_size)
+                        # menu.game.snake.move(0, -0.5 * menu.game.cell_size)
                         menu.game.snake.set_direction(menu.game.snake.UP)
                     elif keys[pygame.K_DOWN]:
-                        menu.game.snake.move(0, 0.5 * menu.game.cell_size)
+                        # menu.game.snake.move(0, 0.5 * menu.game.cell_size)
                         menu.game.snake.set_direction(menu.game.snake.DOWN)
                     else:
                         menu.game.snake.update()

@@ -3,6 +3,7 @@ import random
 
 import pygame
 from colors import *
+from sql_manager import Database
 from widgets import *
 
 
@@ -15,6 +16,7 @@ class Game:
         self.can_move = True
         self.score = 3
         self.apple_coordinates = (random.randint(1, self.cells_count), random.randint(1, self.cells_count))
+        self.db = Database()
 
         self.moving = False
         self.clock = pygame.time.Clock()
@@ -77,7 +79,8 @@ class Game:
                 point.x <= self.border_size,
                 point.x >= self.width - self.border_size - self.cell_size * 0.5,
                 point.y <= self.border_size,
-                point.y >= self.height - self.border_size
+                point.y >= self.height - self.border_size,
+                len(set(self.snake.points)) != len(self.snake.points)
             ]):
                 self.can_move = False
                 self.lose = PygameImage(self.screen, "lose.jpg", (self.width // 2, self.height // 2),
