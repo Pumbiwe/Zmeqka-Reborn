@@ -315,6 +315,16 @@ class PygameSnake:
         self.direction = direction
         self.update()
 
+    def grow(self):
+        x = self.direction * self.radius if self.direction in {self.RIGHT, self.LEFT} else 0
+        y = self.direction * self.radius * 0.5 if self.direction in {self.UP, self.DOWN} else 0
+        self.points.append(
+            (
+                self.points[-1 if self.head_index != -1 else -2][0] + x,
+                self.points[-1 if self.head_index != -1 else -2][1] + y
+            )
+        )
+
     def move(self, x, y):
         head_coordinates = (self.points[self.head_index][0] + x, self.points[self.head_index][1] + y)
         self.points.append(head_coordinates)

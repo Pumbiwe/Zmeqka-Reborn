@@ -117,6 +117,7 @@ if __name__ == '__main__':
     programIcon = pygame.image.load(f'{os.getcwd()}/assets/cobra.png')
     pygame.display.set_icon(programIcon)
     running = True
+
     while running:
         if pygame.mouse.get_pressed()[0]:
             if menu.settings:
@@ -133,18 +134,20 @@ if __name__ == '__main__':
             keys = pygame.key.get_pressed()
             if event.type == pygame.QUIT:
                 running = False
+                pygame.quit()
+            if keys[pygame.K_ESCAPE]:
+                if any([menu.game, menu.statistics, menu.settings]):
+                    menu.game, menu.statistics, menu.settings = None, None, None
+                    menu.InitUI()
+            if menu.game:
+                if not menu.game.can_move: break
+                if menu.game.check_eated_or_killed(): break
             if event.type == pygame.MOUSEBUTTONDOWN:
                 for button in menu.buttons:
                     button.pressed(pygame.mouse.get_pos())
             if event.type == pygame.KEYDOWN:
-                if keys[pygame.K_ESCAPE]:
-                    if any([menu.game, menu.statistics, menu.settings]):
-                        menu.game, menu.statistics, menu.settings = None, None, None
-                        menu.InitUI()
                 if menu.game and menu.game.can_move:
-                    if menu.game.check_eated_or_killed(): break
                     menu.game.InitUI()
-
                     if keys[pygame.K_LEFT]:
                         menu.game.snake.move(-0.5 * menu.game.cell_size, 0)
                         menu.game.snake.set_direction(menu.game.snake.LEFT)

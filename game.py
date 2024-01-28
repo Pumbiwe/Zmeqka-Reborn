@@ -13,6 +13,7 @@ class Game:
         self.width, self.height = screen.get_rect()[2:]
         self.border_size = 10
         self.can_move = True
+        self.score = 3
         self.apple_coordinates = (random.randint(1, self.cells_count), random.randint(1, self.cells_count))
 
         self.moving = False
@@ -26,14 +27,15 @@ class Game:
                                  "apple.png",
                                  (self.get_coordinate_on_matrix(x, y)[0] - (cell_size * 0.5),
                                   self.get_coordinate_on_matrix(x, y)[1] - (
-                                      cell_size * 0.5)),
+                                          cell_size * 0.5)),
                                  image_size=cell_size)
 
     def InitUI(self):
         self.screen.fill(VERY_DARK_BG)
         self.background_border = PygameRectangle(self.screen, YELLOW, int(self.border_size * 0.75),
-                                            int(self.border_size * 0.75), self.width - int(self.border_size * 0.75) * 2,
-                                            self.height - int(self.border_size * 0.75) * 2)
+                                                 int(self.border_size * 0.75),
+                                                 self.width - int(self.border_size * 0.75) * 2,
+                                                 self.height - int(self.border_size * 0.75) * 2)
 
         self.cell_size = (self.width - self.border_size * 2) // self.cells_count
         for x in range(self.cells_count):
@@ -73,16 +75,21 @@ class Game:
                 return
             if any([
                 point.x <= self.border_size,
-                point.x >= self.width - self.border_size,
+                point.x >= self.width - self.border_size - self.cell_size * 0.5,
                 point.y <= self.border_size,
                 point.y >= self.height - self.border_size
             ]):
                 self.can_move = False
-                self.lose = PygameImage(self.screen, "lose.jpg", (self.width // 2, self.height // 2), image_size=self.height, opacity=230)
+                self.lose = PygameImage(self.screen, "lose.jpg", (self.width // 2, self.height // 2),
+                                        image_size=self.height, opacity=230)
                 return True
 
     def eated_apple(self):
+        self.score += 1
         self.apple_coordinates = (random.randint(1, self.cells_count), random.randint(1, self.cells_count))
+        self.InitUI()
+        self.snake.grow()
+        self.snake.update()
         self.place_apple(*self.apple_coordinates)
         pygame.mixer.music.load(f"sounds/eating.mp3")
         pygame.mixer.music.play()
