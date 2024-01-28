@@ -1,4 +1,6 @@
+import asyncio
 import os
+import time
 
 import pygame
 
@@ -296,17 +298,48 @@ class PygameSnake:
     DOWN = -1
     LEFT = -2
     RIGHT = 2
-    def __init__(self, screen:pygame.surface, points, radius=8, color=BLUE):
+
+    def __init__(self, screen: pygame.surface, points, radius=8, color=BLUE, speed=10):
         self.screen = screen
         self.points = points
         self.radius = radius
         self.color = color
+        self.speed = speed
         self.direction = self.UP
+
+        self.head_index = 0
+        self.update()
+
+    def set_direction(self, direction):
+        self.direction = direction
+        self.update()
+
+    def move(self, x, y):
+        head_coordinates = (self.points[self.head_index][0] + x, self.points[self.head_index][1] + y)
+        self.points.append(head_coordinates)
+        self.points.pop(0)
+        self.head_index = self.points.index(head_coordinates)
+        del head_coordinates
         self.update()
 
     def update(self):
         for i in self.points:
             pygame.draw.circle(self.screen, self.color, i, self.radius)
         if self.direction in {self.UP, self.DOWN}:
-            pygame.draw.circle(self.screen, LIGHT, (self.points[0][0] + self.radius / 2, self.points[0][1] - self.radius / 2), self.radius / 3)
-            pygame.draw.circle(self.screen, LIGHT, (self.points[0][0] - self.radius / 2, self.points[0][1] - self.radius / 2), self.radius / 3)
+            pygame.draw.circle(self.screen, LIGHT,
+                               (self.points[self.head_index][0] + self.radius / 2,
+                                self.points[self.head_index][1] - self.direction * self.radius / 2),
+                               self.radius / 3)
+            pygame.draw.circle(self.screen, LIGHT,
+                               (self.points[self.head_index][0] - self.radius / 2,
+                                self.points[self.head_index][1] - self.direction * self.radius / 2),
+                               self.radius / 3)
+        else:
+            pygame.draw.circle(self.screen, LIGHT,
+                               (self.points[self.head_index][0] + self.direction / 2 * self.radius / 2,
+                                self.points[self.head_index][1] + self.radius / 2),
+                               self.radius / 3)
+            pygame.draw.circle(self.screen, LIGHT,
+                               (self.points[self.head_index][0] + self.direction / 2 * self.radius / 2,
+                                self.points[self.head_index][1] - self.radius / 2),
+                               self.radius / 3)

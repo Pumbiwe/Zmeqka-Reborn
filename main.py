@@ -130,17 +130,38 @@ if __name__ == '__main__':
                             background_sound.set_volume(0.1 * volume)
 
         for event in pygame.event.get():
+            keys = pygame.key.get_pressed()
             if event.type == pygame.QUIT:
                 running = False
             if event.type == pygame.MOUSEBUTTONDOWN:
                 for button in menu.buttons:
                     button.pressed(pygame.mouse.get_pos())
             if event.type == pygame.KEYDOWN:
-                keys = pygame.key.get_pressed()
                 if keys[pygame.K_ESCAPE]:
                     if any([menu.game, menu.statistics, menu.settings]):
                         menu.game, menu.statistics, menu.settings = None, None, None
                         menu.InitUI()
+                if menu.game:
+                    menu.game.check_if_eated()
+                    menu.game.InitUI()
+                    if keys[pygame.K_LEFT]:
+                        menu.game.snake.move(-0.5 * menu.game.cell_size, 0)
+                        menu.game.snake.set_direction(menu.game.snake.LEFT)
+                    elif keys[pygame.K_RIGHT]:
+                        menu.game.snake.move(0.5 * menu.game.cell_size, 0)
+                        menu.game.snake.set_direction(menu.game.snake.RIGHT)
+                    elif keys[pygame.K_UP]:
+                        menu.game.snake.move(0, -0.5 * menu.game.cell_size)
+                        menu.game.snake.set_direction(menu.game.snake.UP)
+                    elif keys[pygame.K_DOWN]:
+                        menu.game.snake.move(0, 0.5 * menu.game.cell_size)
+                        menu.game.snake.set_direction(menu.game.snake.DOWN)
+                    else:
+                        menu.game.snake.update()
+
+                    if not menu.game.moving and False:
+                        menu.game.moving = True
+                        asyncio.run(menu.game.mover())
 
         pygame.display.flip()
 

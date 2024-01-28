@@ -21,6 +21,37 @@ class Settings:
         self.title = PygameText(self.screen, text="Settings",
                                 coordinates=(self.width // 2, 15))
 
+        self.difficulty_text = PygameText(
+            self.screen,
+            text="Difficulty",
+            coordinates=(self.width // 2, self.height * 0.2)
+        )
+        self.difficulty_value = PygameText(
+            self.screen,
+            text="1",
+            coordinates=(self.width // 2, self.height * 0.3)
+        )
+        self.difficulty_left = PygameImageButton(
+            self.screen,
+            "left.png",
+            image_size=32,
+            coordinates=(self.width * 0.35, self.height * 0.3)
+        )
+        self.difficulty_right = PygameImageButton(
+            self.screen,
+            "right.png",
+            image_size=32,
+            coordinates=(self.width * 0.65, self.height * 0.3)
+        )
+
+        self.difficulty_left.on_clicked = self.change_difficulty
+        self.difficulty_right.on_clicked = self.change_difficulty
+        self.difficulty_right.args = 1
+        self.difficulty_left.args = -1
+        self.clickable.append(self.difficulty_left)
+        self.clickable.append(self.difficulty_right)
+
+
         self.volume_text = PygameText(self.screen,
                                       text="Volume",
                                       coordinates=(self.width // 2, self.height // 2 - self.width * 0.05)
@@ -35,6 +66,9 @@ class Settings:
             coordinates=(self.width // 2, self.height * 0.8),
             image_size=256
         )
+
+    def change_difficulty(self, value):
+        ...
 
 
 
