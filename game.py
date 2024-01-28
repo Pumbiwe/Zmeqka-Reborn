@@ -49,11 +49,6 @@ class Game:
                                        self.cell_size)
         self.place_apple(*self.apple_coordinates)
 
-    async def mover(self):
-        if self.moving:
-            # self.clock.tick(self.speed)
-            # time.sleep(5 / self.speed)
-            self.snake.move(0, -0.5 * self.cell_size)
 
     def place_snake(self):
         self.snake = PygameSnake(self.screen,
@@ -79,7 +74,7 @@ class Game:
                 point.x <= self.border_size,
                 point.x >= self.width - self.border_size - self.cell_size * 0.5,
                 point.y <= self.border_size,
-                point.y >= self.height - self.border_size,
+                point.y >= self.height - self.border_size - self.cell_size * 0.5,
                 len(set(self.snake.points)) != len(self.snake.points)
             ]):
                 self.can_move = False
@@ -104,6 +99,19 @@ class Game:
 
     def get_coordinate_on_matrix(self, x, y):
         return self.border_size + x * self.cell_size, self.border_size + y * self.cell_size
+
+    def snake_mover(self):
+        while self.can_move:
+            self.InitUI()
+            self.snake.move(
+                self.cell_size * (
+                    (0.5 * self.snake.direction) if self.snake.direction in {self.snake.LEFT,
+                                                                                       self.snake.RIGHT} else 0),
+                -self.cell_size * (
+                    self.snake.direction if self.snake.direction in {self.snake.UP,
+                                                                               self.snake.DOWN} else 0)
+            )
+            self.clock.tick(self.snake.speed)
 
 
 if __name__ == '__main__':

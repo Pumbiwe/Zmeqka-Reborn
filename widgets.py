@@ -1,5 +1,6 @@
 import asyncio
 import os
+import threading
 import time
 
 import pygame
@@ -307,7 +308,7 @@ class PygameSnake:
     LEFT = -2
     RIGHT = 2
 
-    def __init__(self, screen: pygame.surface, points, length=3, radius=8, color=BLUE, speed=10):
+    def __init__(self, screen: pygame.surface, points, length=3, radius=8, color=BLUE, speed=5):
         self.screen = screen
         self.points = points
         self.radius = radius
