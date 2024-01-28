@@ -85,7 +85,10 @@ class MainMenu:
 
     def start_game(self):
         self.play_button_sound(self.start_game)
-        self.game = Game(self.screen, cells_count=[15, 12, 10][self.db.get_settings()[1] - 1])
+        self.game = Game(self.screen,
+                         cells_count=[15, 12, 10][self.db.get_settings()[1] - 1],
+                         colors=[[GREEN, DARK_GREEN], [LIGHT, DARK_BG], [RED, DARK_RED]][self.db.get_settings()[1] - 1]
+                         )
         # threading.Thread(target=self.game.snake_mover).start()
         self.buttons.clear()
 
@@ -160,16 +163,16 @@ if __name__ == '__main__':
             if event.type == pygame.KEYDOWN:
                 if menu.game and menu.game.can_move:
                     menu.game.InitUI()
-                    if keys[pygame.K_LEFT]:
+                    if keys[pygame.K_LEFT] or keys[pygame.K_a]:
                         menu.game.snake.move(-0.5 * menu.game.cell_size, 0)
                         menu.game.snake.set_direction(menu.game.snake.LEFT)
-                    elif keys[pygame.K_RIGHT]:
+                    elif keys[pygame.K_RIGHT] or keys[pygame.K_d]:
                         menu.game.snake.move(0.5 * menu.game.cell_size, 0)
                         menu.game.snake.set_direction(menu.game.snake.RIGHT)
-                    elif keys[pygame.K_UP]:
+                    elif keys[pygame.K_UP] or keys[pygame.K_w]:
                         menu.game.snake.move(0, -0.5 * menu.game.cell_size)
                         menu.game.snake.set_direction(menu.game.snake.UP)
-                    elif keys[pygame.K_DOWN]:
+                    elif keys[pygame.K_DOWN] or keys[pygame.K_s]:
                         menu.game.snake.move(0, 0.5 * menu.game.cell_size)
                         menu.game.snake.set_direction(menu.game.snake.DOWN)
                     else:

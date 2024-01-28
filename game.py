@@ -8,7 +8,7 @@ from widgets import *
 
 
 class Game:
-    def __init__(self, screen: pygame.surface, cells_count: int = 10):
+    def __init__(self, screen: pygame.surface, cells_count: int = 10, colors=[GREEN, DARK_GREEN]):
         self.screen = screen
         self.cells_count = cells_count
         self.width, self.height = screen.get_rect()[2:]
@@ -17,6 +17,7 @@ class Game:
         self.score = 3
         self.apple_coordinates = (random.randint(1, self.cells_count), random.randint(1, self.cells_count))
         self.db = Database()
+        self.colors = colors
 
         self.moving = False
         self.clock = pygame.time.Clock()
@@ -43,7 +44,7 @@ class Game:
         for x in range(self.cells_count):
             for y in range(self.cells_count):
                 cell = PygameRectangle(self.screen,
-                                       GREEN if (x + y) % 2 else DARK_GREEN,
+                                       self.colors[0] if (x + y) % 2 else self.colors[1],
                                        *self.get_coordinate_on_matrix(x, y),
                                        self.cell_size,
                                        self.cell_size)
