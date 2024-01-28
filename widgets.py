@@ -213,7 +213,7 @@ class PygameRectangle:
     def __init__(self,
                  screen: pygame.surface, color=RED, x: int=0, y: int=0, width: int=0, height: int=0
                  ):
-        pygame.draw.rect(
+        self.rectangle = pygame.draw.rect(
             screen,
             color,
             (

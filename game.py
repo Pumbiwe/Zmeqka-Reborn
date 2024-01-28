@@ -12,6 +12,7 @@ class Game:
         self.cells_count = cells_count
         self.width, self.height = screen.get_rect()[2:]
         self.border_size = 10
+        self.can_move = True
         self.apple_coordinates = (random.randint(1, self.cells_count), random.randint(1, self.cells_count))
 
         self.moving = False
@@ -30,7 +31,7 @@ class Game:
 
     def InitUI(self):
         self.screen.fill(VERY_DARK_BG)
-        background_border = PygameRectangle(self.screen, YELLOW, int(self.border_size * 0.75),
+        self.background_border = PygameRectangle(self.screen, YELLOW, int(self.border_size * 0.75),
                                             int(self.border_size * 0.75), self.width - int(self.border_size * 0.75) * 2,
                                             self.height - int(self.border_size * 0.75) * 2)
 
@@ -62,14 +63,23 @@ class Game:
                                  self.cell_size / 3
                                  )
 
-    def check_if_eated(self):
+    def check_eated_or_killed(self):
         apple_coordinates = self.get_coordinate_on_matrix(self.apple_coordinates[0] - 0.5,
                                                           self.apple_coordinates[1] - 0.5)
 
         for point in self.snake.circles:
             if self.apple.rect.colliderect(point):
                 self.eated_apple()
-                break
+                return
+            if any([
+                point.x <= self.border_size,
+                point.x >= self.width - self.border_size,
+                point.y <= self.border_size,
+                point.y >= self.height - self.border_size
+            ]):
+                self.can_move = False
+                self.lose = PygameImage(self.screen, "lose.jpg", (self.width // 2, self.height // 2), image_size=self.height, opacity=230)
+                return True
 
     def eated_apple(self):
         self.apple_coordinates = (random.randint(1, self.cells_count), random.randint(1, self.cells_count))
@@ -79,9 +89,6 @@ class Game:
 
     def get_coordinate_on_matrix(self, x, y):
         return self.border_size + x * self.cell_size, self.border_size + y * self.cell_size
-
-    def test(self):
-        rect = PygameRectangle(screen=self.screen, color=RED, width=10, height=10, x=self.get_coordinate_on_matrix(*self.apple_coordinates)[0], y=self.get_coordinate_on_matrix(*self.apple_coordinates)[1])
 
 
 if __name__ == '__main__':

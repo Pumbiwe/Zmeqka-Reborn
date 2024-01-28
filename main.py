@@ -141,11 +141,9 @@ if __name__ == '__main__':
                     if any([menu.game, menu.statistics, menu.settings]):
                         menu.game, menu.statistics, menu.settings = None, None, None
                         menu.InitUI()
-                if menu.game:
-                    menu.game.check_if_eated()
+                if menu.game and menu.game.can_move:
+                    if menu.game.check_eated_or_killed(): break
                     menu.game.InitUI()
-                    if keys[pygame.K_a]:
-                        menu.game.test()
 
                     if keys[pygame.K_LEFT]:
                         menu.game.snake.move(-0.5 * menu.game.cell_size, 0)
@@ -161,10 +159,6 @@ if __name__ == '__main__':
                         menu.game.snake.set_direction(menu.game.snake.DOWN)
                     else:
                         menu.game.snake.update()
-
-                    if not menu.game.moving and False:
-                        menu.game.moving = True
-                        asyncio.run(menu.game.mover())
 
         pygame.display.flip()
 
