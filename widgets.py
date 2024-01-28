@@ -8,6 +8,14 @@ import pygame
 from colors import *
 
 
+def load_image(image):
+    fullname = os.path.join('assets', image)
+    if not os.path.isfile(fullname):
+        return
+    image = pygame.image.load(fullname)
+    return image
+
+
 class PygameText:
     def __init__(
             self,
@@ -153,7 +161,7 @@ class PygameImage(pygame.sprite.Sprite):
         self.rect = self.image.get_rect()
         self.update()
 
-    def flipper(self, x:bool=False, y:bool=False):
+    def flipper(self, x: bool = False, y: bool = False):
         self.image = pygame.transform.flip(self.image, x, y)
         self.update()
 
@@ -220,7 +228,7 @@ class PygameLine:
 
 class PygameRectangle:
     def __init__(self,
-                 screen: pygame.surface, color=RED, x: int=0, y: int=0, width: int=0, height: int=0
+                 screen: pygame.surface, color=RED, x: int = 0, y: int = 0, width: int = 0, height: int = 0
                  ):
         self.rectangle = pygame.draw.rect(
             screen,
@@ -361,3 +369,26 @@ class PygameSnake:
                                (self.points[self.head_index][0] + self.direction / 2 * self.radius / 2,
                                 self.points[self.head_index][1] - self.radius / 2),
                                self.radius / 3)
+
+
+class AnimatedSprite(pygame.sprite.Sprite):
+    def __init__(self, all_sprites, sheet, columns, rows, x, y):
+        super().__init__(all_sprites)
+        self.frames = []
+        self.cut_sheet(sheet, columns, rows)
+        self.cur_frame = 0
+        self.image = self.frames[self.cur_frame]
+        self.rect = self.rect.move(x, y)
+
+    def cut_sheet(self, sheet, columns, rows):
+        self.rect = pygame.Rect(0, 0, sheet.get_width() // columns,
+                                sheet.get_height() // rows)
+        for j in range(rows):
+            for i in range(columns):
+                frame_location = (self.rect.w * i, self.rect.h * j)
+                self.frames.append(sheet.subsurface(pygame.Rect(
+                    frame_location, self.rect.size)))
+
+    def update(self):
+        self.cur_frame = (self.cur_frame + 1) % len(self.frames)
+        self.image = self.frames[self.cur_frame]

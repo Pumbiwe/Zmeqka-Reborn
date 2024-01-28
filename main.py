@@ -1,3 +1,5 @@
+import threading
+
 from game import *
 from settings import *
 from statistics import *
@@ -11,6 +13,7 @@ import pygame
 
 class MainMenu:
     def __init__(self, screen: pygame.Surface, sprites) -> None:
+        self.clock = pygame.time.Clock()
         self.screen = screen
         self.sprites = sprites
         self.game, self.settings, self.statistics = None, None, None
@@ -59,6 +62,10 @@ class MainMenu:
                                     image_size=height * 0.05
                                     )
 
+        self.snake_anim = AnimatedSprite(self.sprites, load_image("anim.png"), 9, 4, width / 2, height / 2)
+        threading.Thread(target=self.continue_animation).start()
+
+
         self.buttons.append(PygameButton(
             self.screen, text="Статистика", coordinates=(width // 2, height * 0.8, width * 0.5, height * 0.1),
             border_color=DARK_BG,
@@ -77,6 +84,13 @@ class MainMenu:
                                      self.buttons[-1].coordinates[1]),
                                  image_size=height * 0.05
                                  )
+
+    def continue_animation(self):
+        while self.buttons:
+            rectangle = PygameRectangle(self.screen, VERY_DARK_BG, width / 2, height / 2, 100, 100)
+            self.snake_anim.update()
+            self.screen.blit(self.snake_anim.image, self.snake_anim.rect)
+            self.clock.tick(30)
 
     def play_button_sound(self, who_calls):
         for button in self.buttons:
