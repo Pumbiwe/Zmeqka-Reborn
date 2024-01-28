@@ -1,0 +1,127 @@
+Index: settings.py
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>import os\n\nimport pygame\nfrom pygame import Rect\n\nfrom colors import *\nfrom sql_manager import Database\nfrom widgets import *\n\n\nclass Settings:\n    def __init__(self, screen, cells_count: int = 10):\n        self.screen = screen\n        self.db = Database()\n        self.width, self.height = screen.get_rect()[2:]\n        self.clickable = list()\n        self.initUI()\n\n    def initUI(self):\n        self.screen.fill(VERY_DARK_BG)\n        self.title = PygameText(self.screen, text=\"Settings\",\n                                coordinates=(self.width // 2, 15))\n\n        self.volume_text = PygameText(self.screen,\n                                      text=\"Volume\",\n                                      coordinates=(self.width // 2, self.height // 2 - self.width * 0.05)\n                                      )\n        self.volume_slider = PygameSlider(self.screen, self.width // 2, self.height // 2, self.width * 0.4,\n                                     self.height * 0.05)\n        self.volume_slider.set_progress(self.db.get_settings()[0])\n        self.clickable.append(self.volume_slider)\n\n        self.snake = PygameImage(\n            self.screen,\n            coordinates=(self.width // 2, self.height * 0.8),\n            image_size=256\n        )\n\n\n\nif __name__ == '__main__':\n    pygame.init()\n\n    size = width, height = 500, 500\n    screen = pygame.display.set_mode(size)\n    screen.fill(VERY_DARK_BG)\n    settings = Settings(screen)\n\n    running = True\n    while running:\n        for event in pygame.event.get():\n            if event.type == pygame.QUIT:\n                running = False\n\n        pygame.display.flip()\n\n    pygame.quit()\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/settings.py b/settings.py
+--- a/settings.py	(revision 38d17ce221c43c383b8b8e8d6f1f09f12c090d1b)
++++ b/settings.py	(date 1706360713151)
+@@ -21,6 +21,37 @@
+         self.title = PygameText(self.screen, text="Settings",
+                                 coordinates=(self.width // 2, 15))
+ 
++        self.difficulty_text = PygameText(
++            self.screen,
++            text="Difficulty",
++            coordinates=(self.width // 2, self.height * 0.2)
++        )
++        self.difficulty_value = PygameText(
++            self.screen,
++            text="1",
++            coordinates=(self.width // 2, self.height * 0.3)
++        )
++        self.difficulty_left = PygameImageButton(
++            self.screen,
++            "left.png",
++            image_size=32,
++            coordinates=(self.width * 0.35, self.height * 0.3)
++        )
++        self.difficulty_right = PygameImageButton(
++            self.screen,
++            "right.png",
++            image_size=32,
++            coordinates=(self.width * 0.65, self.height * 0.3)
++        )
++
++        self.difficulty_left.on_clicked = self.change_difficulty
++        self.difficulty_right.on_clicked = self.change_difficulty
++        self.difficulty_right.args = 1
++        self.difficulty_left.args = -1
++        self.clickable.append(self.difficulty_left)
++        self.clickable.append(self.difficulty_right)
++
++
+         self.volume_text = PygameText(self.screen,
+                                       text="Volume",
+                                       coordinates=(self.width // 2, self.height // 2 - self.width * 0.05)
+@@ -36,6 +67,9 @@
+             image_size=256
+         )
+ 
++    def change_difficulty(self, value):
++        ...
++
+ 
+ 
+ if __name__ == '__main__':
+Index: .idea/workspace.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<project version=\"4\">\n  <component name=\"AutoImportSettings\">\n    <option name=\"autoReloadType\" value=\"SELECTIVE\" />\n  </component>\n  <component name=\"ChangeListManager\">\n    <list default=\"true\" id=\"7a798c25-53ae-43f3-9df3-f89d266cb865\" name=\"Changes\" comment=\"Commit\">\n      <change beforePath=\"$PROJECT_DIR$/database.db\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/database.db\" afterDir=\"false\" />\n      <change beforePath=\"$PROJECT_DIR$/widgets.py\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/widgets.py\" afterDir=\"false\" />\n    </list>\n    <option name=\"SHOW_DIALOG\" value=\"false\" />\n    <option name=\"HIGHLIGHT_CONFLICTS\" value=\"true\" />\n    <option name=\"HIGHLIGHT_NON_ACTIVE_CHANGELIST\" value=\"false\" />\n    <option name=\"LAST_RESOLUTION\" value=\"IGNORE\" />\n  </component>\n  <component name=\"FileTemplateManagerImpl\">\n    <option name=\"RECENT_TEMPLATES\">\n      <list>\n        <option value=\"Python Script\" />\n      </list>\n    </option>\n  </component>\n  <component name=\"Git.Settings\">\n    <option name=\"RECENT_GIT_ROOT_PATH\" value=\"$PROJECT_DIR$\" />\n  </component>\n  <component name=\"ProjectColorInfo\">{\n  &quot;associatedIndex&quot;: 8\n}</component>\n  <component name=\"ProjectId\" id=\"2bX1C2d33sN1mkJwA05EvYACfQt\" />\n  <component name=\"ProjectLevelVcsManager\" settingsEditedManually=\"true\">\n    <ConfirmationsSetting value=\"2\" id=\"Add\" />\n  </component>\n  <component name=\"ProjectViewState\">\n    <option name=\"hideEmptyMiddlePackages\" value=\"true\" />\n    <option name=\"showLibraryContents\" value=\"true\" />\n  </component>\n  <component name=\"PropertiesComponent\">{\n  &quot;keyToString&quot;: {\n    &quot;ASKED_ADD_EXTERNAL_FILES&quot;: &quot;true&quot;,\n    &quot;Python.colors.executor&quot;: &quot;Run&quot;,\n    &quot;Python.game.executor&quot;: &quot;Run&quot;,\n    &quot;Python.main.executor&quot;: &quot;Run&quot;,\n    &quot;Python.settings.executor&quot;: &quot;Run&quot;,\n    &quot;Python.sql_manager.executor&quot;: &quot;Run&quot;,\n    &quot;Python.statistics.executor&quot;: &quot;Run&quot;,\n    &quot;Python.widgets.executor&quot;: &quot;Run&quot;,\n    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,\n    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,\n    &quot;git-widget-placeholder&quot;: &quot;master&quot;,\n    &quot;last_opened_file_path&quot;: &quot;/home/pumbiwe/PycharmProjects/Zmeyqa&quot;,\n    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;\n  }\n}</component>\n  <component name=\"RecentsManager\">\n    <key name=\"CopyFile.RECENT_KEYS\">\n      <recent name=\"$PROJECT_DIR$\" />\n    </key>\n    <key name=\"MoveFile.RECENT_KEYS\">\n      <recent name=\"$PROJECT_DIR$/assets\" />\n    </key>\n  </component>\n  <component name=\"RunManager\">\n    <configuration name=\"main\" type=\"PythonConfigurationType\" factoryName=\"Python\" nameIsGenerated=\"true\">\n      <module name=\"Zmeyqa\" />\n      <option name=\"ENV_FILES\" value=\"\" />\n      <option name=\"INTERPRETER_OPTIONS\" value=\"\" />\n      <option name=\"PARENT_ENVS\" value=\"true\" />\n      <envs>\n        <env name=\"PYTHONUNBUFFERED\" value=\"1\" />\n      </envs>\n      <option name=\"SDK_HOME\" value=\"\" />\n      <option name=\"WORKING_DIRECTORY\" value=\"$PROJECT_DIR$\" />\n      <option name=\"IS_MODULE_SDK\" value=\"true\" />\n      <option name=\"ADD_CONTENT_ROOTS\" value=\"true\" />\n      <option name=\"ADD_SOURCE_ROOTS\" value=\"true\" />\n      <option name=\"SCRIPT_NAME\" value=\"$PROJECT_DIR$/main.py\" />\n      <option name=\"PARAMETERS\" value=\"\" />\n      <option name=\"SHOW_COMMAND_LINE\" value=\"false\" />\n      <option name=\"EMULATE_TERMINAL\" value=\"false\" />\n      <option name=\"MODULE_MODE\" value=\"false\" />\n      <option name=\"REDIRECT_INPUT\" value=\"false\" />\n      <option name=\"INPUT_FILE\" value=\"\" />\n      <method v=\"2\" />\n    </configuration>\n  </component>\n  <component name=\"SharedIndexes\">\n    <attachedChunks>\n      <set>\n        <option value=\"bundled-python-sdk-50da183f06c8-d3b881c8e49f-com.jetbrains.pycharm.community.sharedIndexes.bundled-PC-233.13135.95\" />\n      </set>\n    </attachedChunks>\n  </component>\n  <component name=\"SpellCheckerSettings\" RuntimeDictionaries=\"0\" Folders=\"0\" CustomDictionaries=\"0\" DefaultDictionary=\"application-level\" UseSingleDictionary=\"true\" transferred=\"true\" />\n  <component name=\"TaskManager\">\n    <task active=\"true\" id=\"Default\" summary=\"Default task\">\n      <changelist id=\"7a798c25-53ae-43f3-9df3-f89d266cb865\" name=\"Changes\" comment=\"\" />\n      <created>1706346478816</created>\n      <option name=\"number\" value=\"Default\" />\n      <option name=\"presentableId\" value=\"Default\" />\n      <updated>1706346478816</updated>\n    </task>\n    <task id=\"LOCAL-00001\" summary=\"Initial\">\n      <option name=\"closed\" value=\"true\" />\n      <created>1706347110322</created>\n      <option name=\"number\" value=\"00001\" />\n      <option name=\"presentableId\" value=\"LOCAL-00001\" />\n      <option name=\"project\" value=\"LOCAL\" />\n      <updated>1706347110322</updated>\n    </task>\n    <task id=\"LOCAL-00002\" summary=\"Addition\">\n      <option name=\"closed\" value=\"true\" />\n      <created>1706347685314</created>\n      <option name=\"number\" value=\"00002\" />\n      <option name=\"presentableId\" value=\"LOCAL-00002\" />\n      <option name=\"project\" value=\"LOCAL\" />\n      <updated>1706347685314</updated>\n    </task>\n    <task id=\"LOCAL-00003\" summary=\"Some changes\">\n      <option name=\"closed\" value=\"true\" />\n      <created>1706351672051</created>\n      <option name=\"number\" value=\"00003\" />\n      <option name=\"presentableId\" value=\"LOCAL-00003\" />\n      <option name=\"project\" value=\"LOCAL\" />\n      <updated>1706351672051</updated>\n    </task>\n    <task id=\"LOCAL-00004\" summary=\"Background sound\">\n      <option name=\"closed\" value=\"true\" />\n      <created>1706351947640</created>\n      <option name=\"number\" value=\"00004\" />\n      <option name=\"presentableId\" value=\"LOCAL-00004\" />\n      <option name=\"project\" value=\"LOCAL\" />\n      <updated>1706351947640</updated>\n    </task>\n    <task id=\"LOCAL-00005\" summary=\"Some new futures\">\n      <option name=\"closed\" value=\"true\" />\n      <created>1706355725774</created>\n      <option name=\"number\" value=\"00005\" />\n      <option name=\"presentableId\" value=\"LOCAL-00005\" />\n      <option name=\"project\" value=\"LOCAL\" />\n      <updated>1706355725774</updated>\n    </task>\n    <task id=\"LOCAL-00006\" summary=\"Apple at the game\">\n      <option name=\"closed\" value=\"true\" />\n      <created>1706356384873</created>\n      <option name=\"number\" value=\"00006\" />\n      <option name=\"presentableId\" value=\"LOCAL-00006\" />\n      <option name=\"project\" value=\"LOCAL\" />\n      <updated>1706356384873</updated>\n    </task>\n    <task id=\"LOCAL-00007\" summary=\"Commit\">\n      <option name=\"closed\" value=\"true\" />\n      <created>1706357189802</created>\n      <option name=\"number\" value=\"00007\" />\n      <option name=\"presentableId\" value=\"LOCAL-00007\" />\n      <option name=\"project\" value=\"LOCAL\" />\n      <updated>1706357189802</updated>\n    </task>\n    <option name=\"localTasksCounter\" value=\"8\" />\n    <servers />\n  </component>\n  <component name=\"VcsManagerConfiguration\">\n    <option name=\"ADD_EXTERNAL_FILES_SILENTLY\" value=\"true\" />\n    <MESSAGE value=\"Initial\" />\n    <MESSAGE value=\"Addition\" />\n    <MESSAGE value=\"Some changes\" />\n    <MESSAGE value=\"Background sound\" />\n    <MESSAGE value=\"Some new futures\" />\n    <MESSAGE value=\"Apple at the game\" />\n    <MESSAGE value=\"Commit\" />\n    <option name=\"LAST_COMMIT_MESSAGE\" value=\"Commit\" />\n  </component>\n</project>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/workspace.xml b/.idea/workspace.xml
+--- a/.idea/workspace.xml	(revision 38d17ce221c43c383b8b8e8d6f1f09f12c090d1b)
++++ b/.idea/workspace.xml	(date 1706362792625)
+@@ -5,8 +5,11 @@
+   </component>
+   <component name="ChangeListManager">
+     <list default="true" id="7a798c25-53ae-43f3-9df3-f89d266cb865" name="Changes" comment="Commit">
++      <change afterPath="$PROJECT_DIR$/assets/left.png" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/assets/right.png" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+       <change beforePath="$PROJECT_DIR$/database.db" beforeDir="false" afterPath="$PROJECT_DIR$/database.db" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/widgets.py" beforeDir="false" afterPath="$PROJECT_DIR$/widgets.py" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/settings.py" afterDir="false" />
+     </list>
+     <option name="SHOW_DIALOG" value="false" />
+     <option name="HIGHLIGHT_CONFLICTS" value="true" />
+@@ -22,6 +25,28 @@
+   </component>
+   <component name="Git.Settings">
+     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
++  </component>
++  <component name="GitHubPullRequestSearchHistory"><![CDATA[{
++  "history": [
++    {
++      "state": "OPEN",
++      "assignee": "Pumbiwe",
++      "author": "YaroslavKris"
++    }
++  ],
++  "lastFilter": {
++    "state": "OPEN",
++    "assignee": "Pumbiwe",
++    "author": "YaroslavKris"
++  }
++}]]></component>
++  <component name="GithubPullRequestsUISettings">
++    <option name="selectedUrlAndAccountId">
++      <UrlAndAccount>
++        <option name="accountId" value="7f73cb4f-5533-45d4-a2d6-4efe037616f4" />
++        <option name="url" value="https://github.com/Pumbiwe/Zmeqka-Reborn" />
++      </UrlAndAccount>
++    </option>
+   </component>
+   <component name="ProjectColorInfo">{
+   &quot;associatedIndex&quot;: 8
+@@ -155,7 +180,15 @@
+       <option name="project" value="LOCAL" />
+       <updated>1706357189802</updated>
+     </task>
+-    <option name="localTasksCounter" value="8" />
++    <task id="LOCAL-00008" summary="Commit">
++      <option name="closed" value="true" />
++      <created>1706359946074</created>
++      <option name="number" value="00008" />
++      <option name="presentableId" value="LOCAL-00008" />
++      <option name="project" value="LOCAL" />
++      <updated>1706359946074</updated>
++    </task>
++    <option name="localTasksCounter" value="9" />
+     <servers />
+   </component>
+   <component name="VcsManagerConfiguration">
