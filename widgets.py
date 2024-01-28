@@ -211,7 +211,7 @@ class PygameLine:
 
 class PygameRectangle:
     def __init__(self,
-                 screen: pygame.surface, color, x: int, y: int, width: int, height: int
+                 screen: pygame.surface, color=RED, x: int=0, y: int=0, width: int=0, height: int=0
                  ):
         pygame.draw.rect(
             screen,
@@ -306,6 +306,7 @@ class PygameSnake:
         self.color = color
         self.speed = speed
         self.direction = self.UP
+        self.circles = list()
 
         self.head_index = 0
         self.update()
@@ -323,8 +324,9 @@ class PygameSnake:
         self.update()
 
     def update(self):
+        self.circles.clear()
         for i in self.points:
-            pygame.draw.circle(self.screen, self.color, i, self.radius)
+            self.circles.append(pygame.draw.circle(self.screen, self.color, i, self.radius))
         if self.direction in {self.UP, self.DOWN}:
             pygame.draw.circle(self.screen, LIGHT,
                                (self.points[self.head_index][0] + self.radius / 2,

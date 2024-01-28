@@ -65,9 +65,11 @@ class Game:
     def check_if_eated(self):
         apple_coordinates = self.get_coordinate_on_matrix(self.apple_coordinates[0] - 0.5,
                                                           self.apple_coordinates[1] - 0.5)
-        for point in self.snake.points:
-            if point == apple_coordinates:
+
+        for point in self.snake.circles:
+            if self.apple.rect.colliderect(point):
                 self.eated_apple()
+                break
 
     def eated_apple(self):
         self.apple_coordinates = (random.randint(1, self.cells_count), random.randint(1, self.cells_count))
@@ -77,6 +79,9 @@ class Game:
 
     def get_coordinate_on_matrix(self, x, y):
         return self.border_size + x * self.cell_size, self.border_size + y * self.cell_size
+
+    def test(self):
+        rect = PygameRectangle(screen=self.screen, color=RED, width=10, height=10, x=self.get_coordinate_on_matrix(*self.apple_coordinates)[0], y=self.get_coordinate_on_matrix(*self.apple_coordinates)[1])
 
 
 if __name__ == '__main__':
