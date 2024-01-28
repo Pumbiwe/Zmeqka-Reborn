@@ -82,6 +82,15 @@ class Game:
                 self.can_move = False
                 self.lose = PygameImage(self.screen, "lose.jpg", (self.width // 2, self.height // 2),
                                         image_size=self.height, opacity=230)
+                self.score_text = PygameText(
+                    self.screen,
+                    text=f"Ваш результат: {self.score}{
+                    ' очко.' if str(self.score)[-1] == '1' else
+                    ' очка.' if str(self.score)[-1] in {'2', '3', '4'} else
+                    ' очков.' if str(self.score)[-1] in {'5', '6', '7', '8', '9', '0'} else '.'
+                    }",
+                    coordinates=(self.width / 2, self.height * 0.6)
+                )
                 return True
 
     def eated_apple(self):

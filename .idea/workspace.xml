@@ -4,12 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="7a798c25-53ae-43f3-9df3-f89d266cb865" name="Changes" comment="Fixed borders">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/database.db" beforeDir="false" afterPath="$PROJECT_DIR$/database.db" afterDir="false" />
+    <list default="true" id="7a798c25-53ae-43f3-9df3-f89d266cb865" name="Changes" comment="Snake growing">
       <change beforePath="$PROJECT_DIR$/game.py" beforeDir="false" afterPath="$PROJECT_DIR$/game.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/widgets.py" beforeDir="false" afterPath="$PROJECT_DIR$/widgets.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -220,7 +216,15 @@
       <option name="project" value="LOCAL" />
       <updated>1706434110927</updated>
     </task>
-    <option name="localTasksCounter" value="14" />
+    <task id="LOCAL-00014" summary="Snake growing">
+      <option name="closed" value="true" />
+      <created>1706436377270</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1706436377270</updated>
+    </task>
+    <option name="localTasksCounter" value="15" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
@@ -235,6 +239,7 @@
     <MESSAGE value="Moving and eating" />
     <MESSAGE value="Fixed eating" />
     <MESSAGE value="Fixed borders" />
-    <option name="LAST_COMMIT_MESSAGE" value="Fixed borders" />
+    <MESSAGE value="Snake growing" />
+    <option name="LAST_COMMIT_MESSAGE" value="Snake growing" />
   </component>
 </project>
