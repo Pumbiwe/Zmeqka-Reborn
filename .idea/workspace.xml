@@ -4,7 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="7a798c25-53ae-43f3-9df3-f89d266cb865" name="Changes" comment="Field colors">
+    <list default="true" id="7a798c25-53ae-43f3-9df3-f89d266cb865" name="Changes" comment="Animation">
+      <change afterPath="$PROJECT_DIR$/assets/anim.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/database.db" beforeDir="false" afterPath="$PROJECT_DIR$/database.db" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
@@ -268,7 +269,15 @@
       <option name="project" value="LOCAL" />
       <updated>1706453940317</updated>
     </task>
-    <option name="localTasksCounter" value="20" />
+    <task id="LOCAL-00020" summary="Animation">
+      <option name="closed" value="true" />
+      <created>1706456759523</created>
+      <option name="number" value="00020" />
+      <option name="presentableId" value="LOCAL-00020" />
+      <option name="project" value="LOCAL" />
+      <updated>1706456759523</updated>
+    </task>
+    <option name="localTasksCounter" value="21" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
@@ -287,6 +296,7 @@
     <MESSAGE value="Fixes" />
     <MESSAGE value="Some new changes" />
     <MESSAGE value="Field colors" />
-    <option name="LAST_COMMIT_MESSAGE" value="Field colors" />
+    <MESSAGE value="Animation" />
+    <option name="LAST_COMMIT_MESSAGE" value="Animation" />
   </component>
 </project>

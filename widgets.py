@@ -372,9 +372,10 @@ class PygameSnake:
 
 
 class AnimatedSprite(pygame.sprite.Sprite):
-    def __init__(self, all_sprites, sheet, columns, rows, x, y):
+    def __init__(self, all_sprites, sheet, columns, rows, x, y, image_size=128):
         super().__init__(all_sprites)
         self.frames = []
+        self.image_size = image_size
         self.cut_sheet(sheet, columns, rows)
         self.cur_frame = 0
         self.image = self.frames[self.cur_frame]
@@ -392,3 +393,4 @@ class AnimatedSprite(pygame.sprite.Sprite):
     def update(self):
         self.cur_frame = (self.cur_frame + 1) % len(self.frames)
         self.image = self.frames[self.cur_frame]
+        self.image = pygame.transform.scale(self.image, (self.image_size, self.image_size))

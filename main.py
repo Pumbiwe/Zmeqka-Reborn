@@ -62,7 +62,7 @@ class MainMenu:
                                     image_size=height * 0.05
                                     )
 
-        self.snake_anim = AnimatedSprite(self.sprites, load_image("anim.png"), 9, 4, width / 2, height / 2)
+        self.snake_anim = AnimatedSprite(self.sprites, load_image("anim.png"), 8, 6, width * 0.5 - 64, height * 0.45)
         threading.Thread(target=self.continue_animation).start()
 
 
@@ -87,10 +87,10 @@ class MainMenu:
 
     def continue_animation(self):
         while self.buttons:
-            rectangle = PygameRectangle(self.screen, VERY_DARK_BG, width / 2, height / 2, 100, 100)
             self.snake_anim.update()
+            rectangle = pygame.draw.rect(self.screen, VERY_DARK_BG, pygame.Rect(self.snake_anim.rect[0], self.snake_anim.rect[1], self.snake_anim.rect[2] * 0.55, self.snake_anim.rect[3] * 0.55))
             self.screen.blit(self.snake_anim.image, self.snake_anim.rect)
-            self.clock.tick(30)
+            self.clock.tick(60)
 
     def play_button_sound(self, who_calls):
         for button in self.buttons:
@@ -98,23 +98,23 @@ class MainMenu:
                 button.play_sound()
 
     def start_game(self):
+        self.buttons.clear()
         self.play_button_sound(self.start_game)
         self.game = Game(self.screen,
                          cells_count=[15, 12, 10][self.db.get_settings()[1] - 1],
                          colors=[[GREEN, DARK_GREEN], [LIGHT, DARK_BG], [RED, DARK_RED]][self.db.get_settings()[1] - 1]
                          )
         # threading.Thread(target=self.game.snake_mover).start()
-        self.buttons.clear()
 
     def show_settings(self):
+        self.buttons.clear()
         self.play_button_sound(self.start_game)
         self.settings = Settings(self.screen)
-        self.buttons.clear()
 
     def show_statistics(self):
+        self.buttons.clear()
         self.play_button_sound(self.start_game)
         self.statistics = Statistics(self.screen)
-        self.buttons.clear()
 
 
 if __name__ == '__main__':
