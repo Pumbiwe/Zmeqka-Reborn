@@ -299,7 +299,7 @@ class PygameSnake:
     LEFT = -2
     RIGHT = 2
 
-    def __init__(self, screen: pygame.surface, points, radius=8, color=BLUE, speed=10):
+    def __init__(self, screen: pygame.surface, points, length=3, radius=8, color=BLUE, speed=10):
         self.screen = screen
         self.points = points
         self.radius = radius
@@ -307,6 +307,7 @@ class PygameSnake:
         self.speed = speed
         self.direction = self.UP
         self.circles = list()
+        self.length = length
 
         self.head_index = 0
         self.update()
@@ -318,17 +319,13 @@ class PygameSnake:
     def grow(self):
         x = self.direction * self.radius if self.direction in {self.RIGHT, self.LEFT} else 0
         y = self.direction * self.radius * 0.5 if self.direction in {self.UP, self.DOWN} else 0
-        self.points.append(
-            (
-                self.points[-1 if self.head_index != -1 else -2][0] + x,
-                self.points[-1 if self.head_index != -1 else -2][1] + y
-            )
-        )
+        self.length += 1
 
     def move(self, x, y):
         head_coordinates = (self.points[self.head_index][0] + x, self.points[self.head_index][1] + y)
         self.points.append(head_coordinates)
-        self.points.pop(0)
+        if len(self.points) != self.length:
+            self.points.pop(0)
         self.head_index = self.points.index(head_coordinates)
         del head_coordinates
         self.update()

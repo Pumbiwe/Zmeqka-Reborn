@@ -62,7 +62,7 @@ class Game:
                                      self.get_coordinate_on_matrix(self.cells_count // 2 + 0.5,
                                                                    self.cells_count / 2 + 1)
                                  ],
-                                 self.cell_size / 3
+                                 radius=self.cell_size / 3
                                  )
 
     def check_eated_or_killed(self):
@@ -84,11 +84,7 @@ class Game:
                                         image_size=self.height, opacity=230)
                 self.score_text = PygameText(
                     self.screen,
-                    text=f"Ваш результат: {self.score}{
-                    ' очко.' if str(self.score)[-1] == '1' else
-                    ' очка.' if str(self.score)[-1] in {'2', '3', '4'} else
-                    ' очков.' if str(self.score)[-1] in {'5', '6', '7', '8', '9', '0'} else '.'
-                    }",
+                    text=f"Ваш результат: {self.score}{' очко.' if str(self.score)[-1] == '1' else ' очка.' if str(self.score)[-1] in {'2', '3', '4'} else ' очков.' if str(self.score)[-1] in {'5', '6', '7', '8', '9', '0'} else '.'}",
                     coordinates=(self.width / 2, self.height * 0.6)
                 )
                 return True
