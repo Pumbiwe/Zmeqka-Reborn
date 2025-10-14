@@ -13,7 +13,7 @@ class Game:
         self.cells_count = cells_count
         self.width, self.height = screen.get_rect()[2:]
         self.border_size = 10
-        self.can_move = True
+        self.can_move = False
         self.score = 3
         self.apple_coordinates = (random.randint(1, self.cells_count), random.randint(1, self.cells_count))
         self.db = Database()
@@ -102,17 +102,19 @@ class Game:
         return self.border_size + x * self.cell_size, self.border_size + y * self.cell_size
 
     def snake_mover(self):
-        while self.can_move:
-            self.InitUI()
-            self.snake.move(
-                self.cell_size * (
-                    (0.5 * self.snake.direction) if self.snake.direction in {self.snake.LEFT,
-                                                                                       self.snake.RIGHT} else 0),
-                -self.cell_size * (
-                    self.snake.direction if self.snake.direction in {self.snake.UP,
-                                                                               self.snake.DOWN} else 0)
-            )
-            self.clock.tick(self.snake.speed)
+        while True:
+            if self.can_move:
+                self.InitUI()
+                if self.snake.get_direction() == self.snake.DOWN:
+                    self.snake.move(0, 0.5 * self.cell_size) # down
+                if self.snake.get_direction() == self.snake.LEFT:
+                    self.snake.move(-0.5 * self.cell_size, 0) # left
+                if self.snake.get_direction() == self.snake.RIGHT:
+                    self.snake.move(0.5 * self.cell_size, 0) # right
+                if self.snake.get_direction() == self.snake.UP:
+                    self.snake.move(0, -0.5 * self.cell_size) # up
+                #self.snake.set_direction(self.snake.DOWN)
+                time.sleep(0.1)
 
 
 if __name__ == '__main__':
@@ -128,7 +130,6 @@ if __name__ == '__main__':
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 running = False
-
         pygame.display.flip()
 
     pygame.quit()
