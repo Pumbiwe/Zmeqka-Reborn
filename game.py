@@ -14,6 +14,7 @@ class Game:
         self.width, self.height = screen.get_rect()[2:]
         self.border_size = 10
         self.can_move = False
+        self.game_over = False
         self.score = 3
         self.apple_coordinates = (random.randint(1, self.cells_count), random.randint(1, self.cells_count))
         self.db = Database()
@@ -25,6 +26,7 @@ class Game:
         self.place_snake()
 
     def place_apple(self, x, y):
+        if self.game_over: return
         cell_size = (self.width - self.border_size * 2) // self.cells_count
         self.apple = PygameImage(self.screen,
                                  "apple.png",
@@ -34,6 +36,7 @@ class Game:
                                  image_size=cell_size)
 
     def InitUI(self):
+        if self.game_over: return
         self.screen.fill(VERY_DARK_BG)
         self.background_border = PygameRectangle(self.screen, YELLOW, int(self.border_size * 0.75),
                                                  int(self.border_size * 0.75),
@@ -52,6 +55,7 @@ class Game:
 
 
     def place_snake(self):
+        if self.game_over: return
         self.snake = PygameSnake(self.screen,
                                  [
                                      self.get_coordinate_on_matrix(self.cells_count // 2 + 0.5, self.cells_count / 2),
@@ -64,6 +68,7 @@ class Game:
                                  )
 
     def check_eated_or_killed(self):
+        if self.game_over: return
         apple_coordinates = self.get_coordinate_on_matrix(self.apple_coordinates[0] - 0.5,
                                                           self.apple_coordinates[1] - 0.5)
 
@@ -79,6 +84,8 @@ class Game:
                 len(set(self.snake.points)) != len(self.snake.points)
             ]):
                 self.can_move = False
+                self.game_over = True
+                self.snake = None
                 self.lose = PygameImage(self.screen, "lose.jpg", (self.width // 2, self.height // 2),
                                         image_size=self.height, opacity=230)
                 self.score_text = PygameText(
@@ -89,6 +96,7 @@ class Game:
                 return True
 
     def eated_apple(self):
+        if self.game_over: return
         self.score += 1
         self.apple_coordinates = (random.randint(1, self.cells_count), random.randint(1, self.cells_count))
         self.InitUI()
@@ -103,8 +111,9 @@ class Game:
 
     def snake_mover(self):
         while True:
-            if self.can_move:
-                self.InitUI()
+            if self.game_over: return
+            if self.can_move and not self.game_over:
+                # self.InitUI()
                 if self.snake.get_direction() == self.snake.DOWN:
                     self.snake.move(0, 0.5 * self.cell_size) # down
                 if self.snake.get_direction() == self.snake.LEFT:

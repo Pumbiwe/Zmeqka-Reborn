@@ -169,7 +169,7 @@ if __name__ == '__main__':
                             clickable.pressed(pygame.mouse.get_pos())
             if event.type == pygame.KEYDOWN:
                 if menu.game: menu.game.can_move = True
-                if menu.game and menu.game.can_move:
+                if menu.game and menu.game.can_move and not menu.game.game_over:
                     menu.game.InitUI()
                     if keys[pygame.K_LEFT] or keys[pygame.K_a]:
                         #menu.game.snake.move(-0.5 * menu.game.cell_size, 0)
