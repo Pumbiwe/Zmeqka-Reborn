@@ -23,11 +23,11 @@ class MainMenu:
     def InitUI(self):
         self.screen.fill(VERY_DARK_BG)
         self.title = PygameText(self.screen, text="Zmeyqa Reborn",
-                                coordinates=(width // 2, 15))
+                                coordinates=(width // 2, height * 0.1))
 
         self.buttons = list()
         self.buttons.append(PygameButton(
-            self.screen, text="Начать", coordinates=(width // 2, height * 0.2, width * 0.5, height * 0.1),
+            self.screen, text="Начать", coordinates=(width // 2, height * 0.3, width * 0.5, height * 0.1),
             border_color=DARK_BG,
             background_color=DARK_BG,
             text_color=LIGHT,
@@ -46,7 +46,7 @@ class MainMenu:
                                  )
 
         self.buttons.append(PygameButton(
-            self.screen, text="Настройки", coordinates=(width // 2, height * 0.35, width * 0.5, height * 0.1),
+            self.screen, text="Настройки", coordinates=(width // 2, height * 0.45, width * 0.5, height * 0.1),
             border_color=DARK_BG,
             background_color=DARK_BG,
             text_color=LIGHT,
@@ -62,12 +62,12 @@ class MainMenu:
                                     image_size=height * 0.05
                                     )
 
-        self.snake_anim = AnimatedSprite(self.sprites, load_image("anim.png"), 8, 6, width * 0.5 - 64, height * 0.45)
-        threading.Thread(target=self.continue_animation).start()
+#        self.snake_anim = AnimatedSprite(self.sprites, load_image("anim.png"), 8, 6, width * 0.5 - 64, height * 0.45)
+#        threading.Thread(target=self.continue_animation).start()
 
 
         self.buttons.append(PygameButton(
-            self.screen, text="Статистика", coordinates=(width // 2, height * 0.8, width * 0.5, height * 0.1),
+            self.screen, text="Статистика", coordinates=(width // 2, height * 0.6, width * 0.5, height * 0.1),
             border_color=DARK_BG,
             background_color=DARK_BG,
             text_color=LIGHT,
@@ -104,7 +104,7 @@ class MainMenu:
                          cells_count=[15, 12, 10][self.db.get_settings()[1] - 1],
                          colors=[[GREEN, DARK_GREEN], [LIGHT, DARK_BG], [RED, DARK_RED]][self.db.get_settings()[1] - 1]
                          )
-        # threading.Thread(target=self.game.snake_mover).start()
+        threading.Thread(target=self.game.snake_mover).start()
 
     def show_settings(self):
         self.buttons.clear()
@@ -128,15 +128,12 @@ if __name__ == '__main__':
     menu = MainMenu(screen, sprites)
     db = Database()
 
-    pygame.mixer.init()
-    background_sound = pygame.mixer.Sound('sounds/background.mp3')
-    background_sound.play()
-    background_sound.set_volume(0.1 * db.get_settings()[0] / 100)
 
     programIcon = pygame.image.load(f'{os.getcwd()}/assets/cobra.png')
     pygame.display.set_icon(programIcon)
     running = True
 
+    
     while running:
         if pygame.mouse.get_pressed()[0]:
             if menu.settings:
@@ -147,8 +144,7 @@ if __name__ == '__main__':
                             db.save_settings(clickable.progress, db.get_settings()[1])
                             volume = db.get_settings()[0] / 100
                             pygame.mixer.music.set_volume(volume)
-                            background_sound.set_volume(0.1 * volume)
-
+        if menu.game: menu.game.check_eated_or_killed()
         for event in pygame.event.get():
             keys = pygame.key.get_pressed()
             if event.type == pygame.QUIT:
@@ -163,9 +159,6 @@ if __name__ == '__main__':
                 if any([menu.game, menu.statistics, menu.settings]):
                     menu.game, menu.statistics, menu.settings = None, None, None
                     menu.InitUI()
-            if menu.game:
-                if not menu.game.can_move: break
-                if menu.game.check_eated_or_killed(): break
             if event.type == pygame.MOUSEBUTTONDOWN:
                 for button in menu.buttons:
                     button.pressed(pygame.mouse.get_pos())
@@ -175,19 +168,20 @@ if __name__ == '__main__':
                         if type(clickable) is not PygameSlider:
                             clickable.pressed(pygame.mouse.get_pos())
             if event.type == pygame.KEYDOWN:
+                if menu.game: menu.game.can_move = True
                 if menu.game and menu.game.can_move:
                     menu.game.InitUI()
                     if keys[pygame.K_LEFT] or keys[pygame.K_a]:
-                        menu.game.snake.move(-0.5 * menu.game.cell_size, 0)
+                        #menu.game.snake.move(-0.5 * menu.game.cell_size, 0)
                         menu.game.snake.set_direction(menu.game.snake.LEFT)
                     elif keys[pygame.K_RIGHT] or keys[pygame.K_d]:
-                        menu.game.snake.move(0.5 * menu.game.cell_size, 0)
+                        #menu.game.snake.move(0.5 * menu.game.cell_size, 0)
                         menu.game.snake.set_direction(menu.game.snake.RIGHT)
                     elif keys[pygame.K_UP] or keys[pygame.K_w]:
-                        menu.game.snake.move(0, -0.5 * menu.game.cell_size)
+                        #menu.game.snake.move(0, -0.5 * menu.game.cell_size)
                         menu.game.snake.set_direction(menu.game.snake.UP)
                     elif keys[pygame.K_DOWN] or keys[pygame.K_s]:
-                        menu.game.snake.move(0, 0.5 * menu.game.cell_size)
+                        #menu.game.snake.move(0, 0.5 * menu.game.cell_size)
                         menu.game.snake.set_direction(menu.game.snake.DOWN)
                     else:
                         menu.game.snake.update()
