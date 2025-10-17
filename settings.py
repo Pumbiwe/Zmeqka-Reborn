@@ -70,7 +70,7 @@ class Settings:
 
     def change_difficulty(self, value):
         new_value = self.db.get_settings()[1] + value
-        if 1 <= new_value <= 3:
+        if 1 <= new_value <= 5:
             self.db.save_settings(self.db.get_settings()[0], new_value)
             self.InitUI()
         del new_value
