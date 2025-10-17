@@ -2,7 +2,7 @@ import threading
 
 from game import *
 from settings import *
-from statistics import *
+from statistics_module import *
 from widgets import *
 from colors import *
 import os
@@ -114,7 +114,7 @@ class MainMenu:
 
     def show_settings(self):
         self.buttons.clear()
-        self.play_button_sound(self.start_game)
+        # self.play_button_sound(self.start_game)
         self.settings = Settings(self.screen)
 
     def show_statistics(self):
