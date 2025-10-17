@@ -192,6 +192,7 @@ if __name__ == '__main__':
                     else:
                         menu.game.snake.update()
 
-        pygame.display.flip()
+        if running:
+            pygame.display.flip()
 
 pygame.quit()
